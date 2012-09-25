@@ -1,0 +1,69 @@
+.navbar-inner {
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1), 0 1px 10px rgba(0, 0, 0, 0.7) !important;
+	-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1), 0 1px 10px rgba(0, 0, 0, 0.7) !important;
+	background-image:-webkit-linear-gradient(top, #333, #111) !important;
+}
+
+.movies-list li {
+	padding:10px;
+	border-bottom:1px solid #efefef;
+	display: block;
+}
+
+.movies-list li.selected{
+	background:green;
+	color:#fff;
+}
+
+.movies-list .info {
+	padding:10px 0;
+	font-size:0.9em;
+}
+
+.pane {
+	position:absolute;
+	left:0;
+	right:0;
+	top:40px;
+	bottom:0;
+	background:#efefef;
+}
+.sidebar{
+	margin-right:10px;
+	position:relative;
+	float:left;
+	height:100%;
+	border-right:1px solid #ccc;
+	width:260px;
+	background:#ffffff;
+	display:block;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.main{
+	display:block;
+	height:100%;
+	position:relative;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+.movie-image{
+	width: 25%;
+}
+.movie-main-info{
+	width: 74%;
+	float: right;
+}
+.movie-detail-top{
+	margin-top: 20px;
+}
+.with-icons h2, .with-icons h4{
+	display: inline-block;
+	margin-left: 10px;
+	vertical-align: middle;
+	max-width: 600px;
+}
+.movie-listed img{
+	max-width: 61px;
+}
