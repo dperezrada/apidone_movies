@@ -1,5 +1,10 @@
 # Start app
 python -m SimpleHTTPServer
 
-# Add new movie
-node add_new_movie.js "Star Wars" 1977
+
+# Script to add new Movies
+## Install
+npm install request async
+
+## Run
+node add_new_movie.js "machuca" 2004
