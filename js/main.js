@@ -14,8 +14,8 @@ App.Models.Movie = Backbone.Model.extend({});
 App.Models.Genre = Backbone.Model.extend({});
 
 // Variables
-App.Variables.movies_url = 'http://localhost:3000/movies?_sort_by=rating_rotten_average&_sort_type=desc'
-App.Variables.genre_url = 'http://localhost:3000/movies?_select_distinct=genre'
+App.Variables.movies_url = 'http://movies.apidone.com/movies?_sort_by=rating_rotten_average&_sort_type=desc'
+App.Variables.genre_url = 'http://movies.apidone.com/movies?_select_distinct=genre'
 
 // Collections
 
@@ -56,41 +56,38 @@ App.Views.MovieListed = Backbone.View.extend({
 	className: 'movie-listed',
 	template: _.template($('#tpl-movie-listed').html()),
 	events: {
-		"click": "selectClient"
+		"click": "selectMovie"
 	},
 	render: function(){
 		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
 	},
-	selectClient: function(e){
-		var target = e.target;
-		if (target.tagName!="LI") {
-			target = $(target).parent();
-		}
-		$('.movie-listed').removeClass('selected');
-		$(target).addClass('selected');
-		new App.Views.MovieDetail({model: this.model});
+	selectMovie: function(e){
+		// var target = e.target;
+		// if (target.tagName!="LI") {
+		// 	target = $(target).parent();
+		// }
+		// $('.movie-listed').removeClass('selected');
+		// $(target).addClass('selected');
+		// new App.Views.MovieDetail({model: this.model});
 	}
 });
 
-App.Views.MovieDetail = Backbone.View.extend({
-	tag: 'div',
-	template: _.template($('#tpl-movie-detail').html()),
-	initialize: function(){
-		this.render();
-	},
-	render: function(){
-		$(this.el).html(this.template(this.model.toJSON()));
-		$('#movies-container .main').html(this.el);
-	}
-});
+// App.Views.MovieDetail = Backbone.View.extend({
+// 	tag: 'div',
+// 	template: _.template($('#tpl-movie-detail').html()),
+// 	initialize: function(){
+// 		this.render();
+// 	},
+// 	render: function(){
+// 		$(this.el).html(this.template(this.model.toJSON()));
+// 		$('#movies-container .main').html(this.el);
+// 	}
+// });
 
 App.Views.GenresList = Backbone.View.extend({
-	tagName: 'select',
+	tagName: 'ul',
 	className: 'genre_select',
-	events: {
-		'change': 'changeGenre'
-	},
 	initialize: function(){
 		$(this.el).html("");
 		this.collection = new App.Collections.Genres();
@@ -99,32 +96,39 @@ App.Views.GenresList = Backbone.View.extend({
 		this.collection.fetch({url: App.Variables.genre_url});
 	},
 	render: function(){
-		$(this.el).append("<option value='All'>All Genres</option>");
+		var all_genres = new App.Models.Genre({'genre': 'All'})
+		this.addOne(all_genres);
 		this.collection.each(function(model){
 			this.addOne(model);
 		}, this);
-		$('.genres-list').html(this.el);
+		$('.genres-list').append(this.el);
 	},
 	addOne: function(model) {
 		var view = new App.Views.GenreListed({model: model});
 		$(this.el).append(view.render().el);
-	},
-	changeGenre: function(e){
-		var genre = $(e.target).val();
-		App.Variables.movies_url = 'http://localhost:3000/movies?_sort_by=rating_rotten_average&_sort_type=desc'
-		if(genre != "All"){
-			App.Variables.movies_url+='&genre='+genre;
-		}
-		App.Instances.Views.movie_list.collection.fetch({url: App.Variables.movies_url});
 	}
 });
 
 App.Views.GenreListed = Backbone.View.extend({
-	tagName: 'option',
+	tagName: 'li',
+	className: 'genre-item',
+	events: {
+		'click': 'changeGenre'
+	},
 	render: function(){
-		$(this.el).attr('value', this.model.get('genre'));
 		$(this.el).text(this.model.get('genre'));
 		return this;
+	},
+	changeGenre: function(e){
+		$('.genre-item').removeClass('selected');
+		$(e.target).addClass('selected');
+
+		var genre = $(e.target).text();
+		App.Variables.movies_url = 'http://movies.apidone.com/movies?_sort_by=rating_rotten_average&_sort_type=desc'
+		if(genre != "All"){
+			App.Variables.movies_url+='&genre='+genre;
+		}
+		App.Instances.Views.movie_list.collection.fetch({url: App.Variables.movies_url});
 	}
 });
 

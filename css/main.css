@@ -82,3 +82,12 @@
 	margin-bottom: 17px;
 	text-align: center
 }
+.sidebar ul{
+	height: 150px;
+	overflow: scroll;
+	width: 235px;
+}
+.sidebar li.selected{
+    background:green;
+    color:#fff;
+}
