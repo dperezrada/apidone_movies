@@ -57,59 +57,42 @@
     <div id='movies-container' class='pane'>
 
       <div class="sidebar">
-          <ul class="unstyled movies-list">
-          </ul>
       </div>
 
-      <div class="main"></div>
+      <div class="main"><ul class="unstyled movies-list">
+          </ul></div>
     </div>
 
     <script type="text/template" id="tpl-movie-listed">
-      <%= title %> <br/>
-      <img src="<%= image_thumb %>"/>
-      <span class='muted'><%= year %></span>
-    </script>
-
-    <script type="text/template" id="tpl-movie-detail">
       <div class="movie-detail-top">
+        <div class="movie-title"><%= title %></div>
         <img src="<%= image %>" class="movie-image"/>
         <div class="movie-main-info">
-          <h2 class="movie-title"><%= title %></h2>
-          
           <div class="with-icons rating imdb">
-            <img src="/img/imdb_ico.png"/>
-            <h2><%= rating_imdb %></h2>
+            <div class="rating_imdb"><img src="/img/imdb_ico.png" class="rating_ico"/><span class="rating_imdb"><%= rating_imdb %></span></div>
           </div>
           
           <div class="with-icons rating rotten critics">
-            <img src="/img/rotten_ico.png">
-            <% if(rating_rotten_critics >= 0){%>
-            <h2><%= rating_rotten_average %>%</h2><span>(Avg)</span>
-            <h4><%= rating_rotten_critics %>%</h4> <span>(Crit)</span> 
-            <h4><%= rating_rotten_audience %>%</h4> <span>(Aud)</span>
-            <% } else {%>
-              <h2><%= rating_rotten_audience %>%</h2> <span>(Aud)</span>
-            <% } %>
+            <div><img src="/img/rotten_ico.png" class="rating_ico"/><span class="rating_rotten_average"><%= rating_rotten_average %>%</span></div>
           </div>
 
           <div class="with-icons runtime">
-            <img src="/img/time.png">
-            <h2><%= runtime %> min</h2>
+            <div><img src="/img/time.png"><span class="runtime"><%= runtime %> min</span></div>
           </div>
 
           <div class="with-icons year">
-            <img src="/img/year.png">
-            <h2><%= year %></h2>
+            <div><img src="/img/year.png"><span><%= year %></span></div>
           </div>
 
-          <div class="with-icons genre">
-            <img src="/img/drama.png">
-            <h2>
-            <% var sep = "";for(var i=0; i<genre.length; i++) {%><%= sep+genre[i] %><% sep = ", " %><% } %>
-            </h2>
-          </div>
+        </div>
+        <div class="with-icons genre">
+          <% var sep = "";for(var i=0; i<genre.length; i++) {%><%= sep+genre[i] %><% sep = ", " %><% } %>
         </div>
       </div>
+    </script>
+
+    <script type="text/template" id="tpl-movie-detail">
+      
     </script> 
 
     <script src="/js/jquery-1.8.1.min.js"></script>
