@@ -55,6 +55,9 @@
 	height: 260px;
 	float: left;
 	margin: 20px;
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	background:#fff;
 }
 
 .movies-list .info {
@@ -83,11 +86,44 @@
 	text-align: center
 }
 .sidebar ul{
-	height: 150px;
-	overflow: scroll;
-	width: 235px;
+	
+}
+
+.sidebar ul li {
+	padding:10px 5px;
+	background:#e0e0e0;
+	border-top:1px solid rgba(255,255,255,0.7);
+	border-bottom:1px solid rgba(0,0,0,0.2);
+	background-image: -moz-linear-gradient(top, #efefef, #E0E0E0);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#efefef), to(#E0E0E0));
+	background-image: -webkit-linear-gradient(top, #efefef, #E0E0E0);
+	background-image: -o-linear-gradient(top, #efefef, #E0E0E0);
+	background-image: linear-gradient(to bottom, #efefef, #E0E0E0);
+	font-size:0.9em;
+	font-weight:bold;
+	color:#666;
 }
 .sidebar li.selected{
     background:green;
     color:#fff;
+	background-image: -moz-linear-gradient(top, #32b200, #2b9900);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#32b200), to(#2b9900));
+	background-image: -webkit-linear-gradient(top, #32b200, #2b9900);
+	background-image: -o-linear-gradient(top, #32b200, #2b9900);
+	background-image: linear-gradient(to bottom, #32b200, #2b9900);    
+	border-top:1px solid rgba(255,255,255,0.7);
+}
+.sidebar .sidebar-title {
+	padding:10px 5px;
+	background:#e0e0e0;
+	border-top:1px solid rgba(255,255,255,0.7);
+	border-bottom:1px solid rgba(0,0,0,0.2);
+	background-image: -moz-linear-gradient(top, #585858, #4a4a4a);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#585858), to(#4a4a4a));
+	background-image: -webkit-linear-gradient(top, #585858, #4a4a4a);
+	background-image: -o-linear-gradient(top, #585858, #4a4a4a);
+	background-image: linear-gradient(to bottom, #585858, #4a4a4a);
+	font-size:0.9em;
+	font-weight:bold;
+	color:#fff;	
 }

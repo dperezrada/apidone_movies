@@ -87,7 +87,7 @@ App.Views.MovieListed = Backbone.View.extend({
 
 App.Views.GenresList = Backbone.View.extend({
 	tagName: 'ul',
-	className: 'genre_select',
+	className: 'genre_select unstyled	',
 	initialize: function(){
 		$(this.el).html("");
 		this.collection = new App.Collections.Genres();
@@ -112,18 +112,19 @@ App.Views.GenresList = Backbone.View.extend({
 App.Views.GenreListed = Backbone.View.extend({
 	tagName: 'li',
 	className: 'genre-item',
+	template: _.template($('#tpl-genre-item').html()),
 	events: {
 		'click': 'changeGenre'
 	},
 	render: function(){
-		$(this.el).text(this.model.get('genre'));
+		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
 	},
 	changeGenre: function(e){
 		$('.genre-item').removeClass('selected');
 		$(e.target).addClass('selected');
 
-		var genre = $(e.target).text();
+		var genre = this.model.get("genre");
 		App.Variables.movies_url = 'http://movies.apidone.com/movies?_sort_by=rating_rotten_average&_sort_type=desc'
 		if(genre != "All"){
 			App.Variables.movies_url+='&genre='+genre;
