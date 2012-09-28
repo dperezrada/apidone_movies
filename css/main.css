@@ -13,11 +13,9 @@
 	background:#efefef;
 }
 .sidebar{
-	margin-right:10px;
 	position:relative;
 	float:left;
 	height:100%;
-	border-right:1px solid #ccc;
 	width:260px;
 	background:#ffffff;
 	display:block;
@@ -28,8 +26,13 @@
 	display:block;
 	height:100%;
 	position:relative;
-	overflow-x:hidden;
+	overflow-x:auto;
 	overflow-y:auto;
+	background-image:-webkit-linear-gradient(top, #4A4A4A, #2A2A2A);
+	background-image: -moz-linear-gradient(top, #4A4A4A, #2A2A2A);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4A4A4A), to(#2A2A2A));
+	background-image: -o-linear-gradient(top, #4A4A4A, #2A2A2A);
+	background-image: linear-gradient(to bottom, #4A4A4A, #2A2A2A);
 }
 
 .movie-image{
@@ -48,15 +51,15 @@
 }
 
 .movies-list li {
-	padding:10px;
-	border:1px solid #ccc;
+	position:relative;
+	border:0px solid #ccc;
 	display: block;
-	width: 270px;
-	height: 260px;
+	width:348px;;
 	float: left;
 	margin: 20px;
-	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+	-moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
 	background:#fff;
 }
 
@@ -80,10 +83,13 @@
 	margin-top: 10px;
 }
 .movie-title{
-	font-size: 21px;
+	font-size: 14px;
 	line-height: 21px;
 	margin-bottom: 17px;
-	text-align: center
+	text-align: center;
+	color:#fff;
+	background:rgba(0,0,0,0.6);
+	padding:10px;
 }
 .sidebar ul{
 	
@@ -126,4 +132,33 @@
 	font-size:0.9em;
 	font-weight:bold;
 	color:#fff;	
+}
+.movie-comments{
+	width: 347px;
+	height: 490px;
+	left: 348px;
+	border-left: 1px solid #000;
+	border-top:1px solid #ccc;
+	border-right:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	top: 0px;
+	z-index: 0;
+	background-color: #fff;
+	position: absolute;
+	z-index: 1;
+	display:none;
+}
+.movie-info{
+	position:absolute;
+	left:167px;
+	bottom:20px;	
+	width:200px;
+	-box-shadow:0 0 5px rgba(0,0,0,0.9);
+	padding-top:20px;
+	background:url(/img/triangulo.png) no-repeat top right;
+	z-index: 2;
+}
+
+.movie-listed.open {
+	width:696px;
 }

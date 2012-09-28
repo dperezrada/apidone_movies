@@ -14,7 +14,7 @@ App.Models.Movie = Backbone.Model.extend({});
 App.Models.Genre = Backbone.Model.extend({});
 
 // Variables
-App.Variables.movies_url = 'http://movies.apidone.com/movies?_sort_by=rating_rotten_average&_sort_type=desc'
+App.Variables.movies_url = 'http://movies.apidone.com/movies?_sort_by=rating_rotten_average&_sort_type=desc&genre=Comedy'
 App.Variables.genre_url = 'http://movies.apidone.com/movies?_select_distinct=genre'
 
 // Collections
@@ -44,6 +44,7 @@ App.Views.MoviesList = Backbone.View.extend({
 		this.collection.each(function(model){
 			this.addOne(model);
 		}, this);
+		$(this.el).css("width",(this.collection.length+1)*(390)+"px");
 	},
 	addOne: function(model) {
 		var view = new App.Views.MovieListed({model: model});
@@ -56,13 +57,19 @@ App.Views.MovieListed = Backbone.View.extend({
 	className: 'movie-listed',
 	template: _.template($('#tpl-movie-listed').html()),
 	events: {
-		"click": "selectMovie"
+		"click": "selectMovie",
+		'click .comments': 'showComments'
 	},
 	render: function(){
 		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
 	},
+	showComments: function(e){
+		$(".movie-comments", this.el).html("<div>Comments</div>");
+	},
 	selectMovie: function(e){
+		$(this.el).addClass("open");
+		$(".movie-comments", this.el).show();
 		// var target = e.target;
 		// if (target.tagName!="LI") {
 		// 	target = $(target).parent();
