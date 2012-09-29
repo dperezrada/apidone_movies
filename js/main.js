@@ -12,8 +12,10 @@ var App = {
 
 App.Models.Movie = Backbone.Model.extend({});
 App.Models.Genre = Backbone.Model.extend({});
+App.Models.Comment = Backbone.Model.extend({});
 
 // Variables
+App.Variables.movies_base_url = 'http://movies.apidone.com/movies'
 App.Variables.movies_url = 'http://movies.apidone.com/movies?_sort_by=rating_rotten_average&_sort_type=desc&genre=Comedy'
 App.Variables.genre_url = 'http://movies.apidone.com/movies?_select_distinct=genre'
 
@@ -28,6 +30,9 @@ App.Collections.Genres = Backbone.Collection.extend({
   		return genre.get("genre");
 	}
 });
+App.Collections.Comments= Backbone.Collection.extend({
+	model: App.Models.Comment
+});
 
 // Views
 App.Views.MoviesList = Backbone.View.extend({
@@ -37,16 +42,20 @@ App.Views.MoviesList = Backbone.View.extend({
 		this.collection = new App.Collections.Movies();
 		this.collection.bind('reset', this.render, this);
 		this.collection.bind('add', this.render, this);
-		this.collection.fetch({url: App.Variables.movies_url});
+		this.collection.url = App.Variables.movies_url;
+		this.collection.fetch();
 	},
 	render: function(){
 		$(this.el).html("");
 		this.collection.each(function(model){
+			model.baseUrl = App.Variables.movies_base_url;
 			this.addOne(model);
 		}, this);
 		$(this.el).css("width",(this.collection.length+1)*(390)+"px");
 	},
 	addOne: function(model) {
+		model.rootUrl = App.Variables.movies_base_url;
+		model.url = function(){return this.rootUrl+"/"+this.id;}
 		var view = new App.Views.MovieListed({model: model});
 		$(this.el).append(view.render().el);
 	},
@@ -68,8 +77,15 @@ App.Views.MovieListed = Backbone.View.extend({
 		$(".movie-comments", this.el).html("<div>Comments</div>");
 	},
 	selectMovie: function(e){
+		$(".movie-listed").removeClass("open");
 		$(this.el).addClass("open");
+		$(".movie-comments").hide();
 		$(".movie-comments", this.el).show();
+		var model_url = this.model.url();
+		this.comments = new App.Views.CommentsList({
+			url: model_url+'/comments'
+		});
+		$(".movie-comments", this.el).html(this.comments.render().el);
 		// var target = e.target;
 		// if (target.tagName!="LI") {
 		// 	target = $(target).parent();
@@ -137,6 +153,37 @@ App.Views.GenreListed = Backbone.View.extend({
 			App.Variables.movies_url+='&genre='+genre;
 		}
 		App.Instances.Views.movie_list.collection.fetch({url: App.Variables.movies_url});
+	}
+});
+
+App.Views.CommentsList = Backbone.View.extend({
+	tagName: 'ul',
+	initialize: function(opts){
+		$(this.el).html("");
+		this.collection = new App.Collections.Comments();
+		this.collection.bind('reset', this.render, this);
+		this.collection.bind('add', this.render, this);
+		this.collection.fetch({url: opts.url});
+	},
+	render: function(){
+		this.collection.each(function(model){
+			this.addOne(model);
+		}, this);
+		return this;
+	},
+	addOne: function(model) {
+		var view = new App.Views.CommentListed({model: model});
+		$(this.el).append(view.render().el);
+	}
+});
+
+App.Views.CommentListed = Backbone.View.extend({
+	tagName: 'li',
+	className: 'comment-item',
+	template: _.template($('#tpl-comment-item').html()),
+	render: function(){
+		$(this.el).html(this.template(this.model.toJSON()));
+		return this;
 	}
 });
 
